@@ -1,0 +1,71 @@
+@import './tailwind.css';
+
+:root {
+    --color-primary-lighter: #e9e7e7;
+    --color-primary: #4262ff;
+    --color-primary-darker: #3f5cf1;
+}
+
+* {
+&::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 5px;
+    @apply bg-white;
+
+    &:horizontal {
+      height: 6px;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-[color:var(--color-primary)];
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    &:hover,
+    &:active {
+        @apply bg-[color:var(--color-primary-darker)];
+    }
+  }
+}
+
+body {
+    overflow: hidden;
+}
+
+#app {
+    @apply h-screen bg-gray-100 flex flex-col justify-between ;
+}
+
+.btn-primary {
+    @apply rounded-xl bg-[color:var(--color-primary)] hover:bg-[color:var(--color-primary-darker)] text-sm text-white py-0.5 px-4;
+
+    &-small {
+      @apply rounded-xl bg-[color:var(--color-primary)] hover:bg-[color:var(--color-primary-darker)] text-xs text-white py-0.5 px-2;
+    }
+}
+
+.fade-page-enter-active,
+.fade-page-leave-active {
+  transition: transform 0.4s ease-in-out, left 0.5s ease-in-out;
+}
+
+.fade-page-leave-from,
+.fade-page-enter-to {
+    opacity: 0;
+}
+.fade-page-leave-to {
+    transform: translateX(-100%);
+    left: -100%;
+}
+
+
+.fade-page-enter-from {
+  transform: translateX(100%);
+  left: 100%;
+}
