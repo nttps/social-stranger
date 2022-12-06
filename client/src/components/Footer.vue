@@ -1,5 +1,7 @@
 <template>
-  <div class="grid grid-cols-4 justify-between py-2 border-t border-gray-300">
+  <div
+    class="fixed bottom-0 w-full grid grid-cols-4 justify-between py-2 border-t border-gray-300"
+  >
     <RouterLink to="/" class="flex justify-center items-center cursor-pointer">
       <Icon
         v-if="currentRoute === 'feed'"
