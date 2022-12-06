@@ -1,9 +1,9 @@
 <template>
-  <PostComponent :message="infomationPost.message" @post="createPost" />
+  <PostComponent :content="infomationPost.message" @post="createPost" />
 </template>
 
 <script setup>
-import PostComponent from "../components/PostComponent.vue";
+import PostComponent from "@/components/Post/PostComponent.vue";
 
 const infomationPost = reactive({
   id: 2,

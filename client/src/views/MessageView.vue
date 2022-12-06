@@ -1,13 +1,29 @@
 <template>
-  <message-container
-    v-for="(message, index) in messages"
-    :key="index"
-    :message="message"
-  />
+  <div>
+    <message-container
+      v-for="(message, index) in messages"
+      :key="index"
+      :message="message"
+      @open-conversation="openConversation"
+    />
+
+    <transition name="slide-up-full" appear>
+      <ConversationComponent
+        v-if="showConversation"
+        @close-conversation="openConversation"
+      />
+    </transition>
+  </div>
 </template>
 
 <script setup>
-import MessageContainer from "@/components/MessageContainer.vue";
+import MessageContainer from "@/components/Conversation/MessageContainer.vue";
+import ConversationComponent from "@/components/Conversation/ConversationComponent.vue";
+
+const showConversation = ref(false);
+const openConversation = () => {
+  showConversation.value = !showConversation.value;
+};
 
 const messages = ref([
   {

@@ -7,14 +7,12 @@
       <div class="flex flex-col justify-center items-center gap-2">
         <img :src="profile.avatar" alt="" class="md:w-20 md:h-20 w-14 h-14" />
 
-        <router-link
-          :to="{ name: 'edit-profile', params: { slug: profile.slug } }"
-          class="btn-primary-small"
-          >Edit profile</router-link
-        >
+        <button class="btn-primary-small" @click="toggleEdit">
+          Edit profile
+        </button>
       </div>
       <div class="flex-1 flex flex-col">
-        <div class="font-bold md:text-xl">@{{ profile.slug }}</div>
+        <div class="font-bold md:text-xl">@{{ profile.username }}</div>
         <div class="text-zinc-500 md:text-base text-sm mb-1">
           {{ profile.bio }}
         </div>
@@ -34,19 +32,24 @@
       </div>
     </div>
     <div ref="feedContainer" class="overflow-y-auto">
-      <FeedItem v-for="(item, index) in feedItems" :key="index" :post="item" />
+      <PostItem v-for="(item, index) in PostItems" :key="index" :post="item" />
     </div>
+    <transition name="slide-up-full" appear>
+      <EditProfile v-if="editProfile" @close-edit="toggleEdit" />
+    </transition>
   </div>
 </template>
 
 <script setup>
-import FeedItem from "@/components/FeedItem.vue";
+import PostItem from "@/components/Post/PostItem.vue";
+import EditProfile from "@/components/Profile/EditProfile.vue";
+
 const profile = reactive({
   created_at: Date.now(),
-  message: "Hello, world again",
+  content: "Hello, world again",
   avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
   name: "NTTPS",
-  slug: "nttps",
+  username: "nttps",
   id: 5,
   totalPost: 500,
   totalCall: 10,
@@ -56,146 +59,58 @@ const profile = reactive({
 const profileContainer = ref();
 const feedContainer = ref();
 
+const editProfile = ref(false);
+const toggleEdit = () => {
+  editProfile.value = !editProfile.value;
+};
+
 onMounted(() => {
-  const heightWindow = document.querySelector("body").offsetHeight;
+  const heightWindow = document.querySelector("html").offsetHeight;
   const heightProfileContainer = profileContainer.value.offsetHeight;
-  const heightHeader = 41;
-  const heightFooter = 41;
+  const heightHeader = 49;
+  const heightFooter = 49;
 
   const heightNonset = heightProfileContainer + heightHeader + heightFooter;
   const heightCut = heightWindow - heightNonset;
 
   feedContainer.value.style.height = heightCut + "px";
 });
-const feedItems = reactive([
+const PostItems = reactive([
   {
     created_at: Date.now(),
-    message: "Hello, world",
+    content: "Hello, world",
     avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
     name: "NTTPS",
-    slug: "nttps",
+    username: "nttps",
     id: 5,
     liked: false,
     likeQuantity: 10,
     commentQuantity: 5,
+    comments: [],
   },
   {
     created_at: Date.now(),
-    message: "Hello, world again",
+    content: "Hello, world again",
     avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
     name: "NTTPS",
-    slug: "nttps",
+    username: "nttps",
     id: 5,
     liked: true,
     likeQuantity: 1,
     commentQuantity: 1,
+    comments: [],
   },
   {
     created_at: Date.now(),
-    message: "Hello, world again and again",
+    content: "Hello, world again and again",
     avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
     name: "NTTPS",
-    slug: "nttps",
+    username: "nttps",
     id: 5,
     liked: false,
     likeQuantity: 0,
     commentQuantity: 5,
-  },
-  {
-    created_at: Date.now(),
-    message:
-      "Hello, world again and again dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-    avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-    name: "NTTPS",
-    slug: "nttps",
-    id: 5,
-    liked: true,
-    likeQuantity: 10,
-    commentQuantity: 5,
-  },
-  {
-    created_at: Date.now(),
-    message:
-      "Hello, world again and again dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-    avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-    name: "NTTPS",
-    slug: "nttps",
-    id: 5,
-    liked: true,
-    likeQuantity: 12,
-    commentQuantity: 6,
-  },
-  {
-    created_at: Date.now(),
-    message:
-      "Hello, world again and again dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-    avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-    name: "NTTPS",
-    slug: "nttps",
-    id: 5,
-    liked: false,
-    likeQuantity: 10,
-    commentQuantity: 5,
-  },
-  {
-    created_at: Date.now(),
-    message:
-      "Hello, world again and again dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-    avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-    name: "NTTPS",
-    slug: "nttps",
-    id: 5,
-    liked: false,
-    likeQuantity: 10,
-    commentQuantity: 5,
-  },
-  {
-    created_at: Date.now(),
-    message:
-      "Hello, world again and again dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-    avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-    name: "NTTPS",
-    slug: "nttps",
-    id: 5,
-    liked: false,
-    likeQuantity: 10,
-    commentQuantity: 5,
-  },
-  {
-    created_at: Date.now(),
-    message:
-      "Hello, world again and again dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-    avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-    name: "NTTPS",
-    slug: "nttps",
-    id: 5,
-    liked: false,
-    likeQuantity: 10,
-    commentQuantity: 5,
-  },
-  {
-    created_at: Date.now(),
-    message:
-      "Hello, world again and again dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-    avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-    name: "NTTPS",
-    slug: "nttps",
-    id: 5,
-    liked: false,
-    likeQuantity: 10,
-    commentQuantity: 5,
-  },
-  {
-    created_at: Date.now(),
-    message:
-      "Hello, world again and again dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-    avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-    name: "NTTPS",
-    slug: "nttps",
-    id: 5,
-    liked: false,
-    likeQuantity: 10,
-    commentQuantity: 5,
+    comments: [],
   },
 ]);
 </script>

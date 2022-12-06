@@ -7,7 +7,7 @@
 }
 
 * {
-&::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     width: 5px;
     border-radius: 5px;
     @apply bg-white;
@@ -34,12 +34,8 @@
   }
 }
 
-body {
-    overflow: hidden;
-}
-
 #app {
-    @apply h-screen bg-gray-100 flex flex-col justify-between ;
+    @apply h-screen bg-gray-100 flex flex-col justify-between  pb-12;
 }
 
 .btn-primary {
@@ -48,6 +44,10 @@ body {
     &-small {
       @apply rounded-xl bg-[color:var(--color-primary)] hover:bg-[color:var(--color-primary-darker)] text-xs text-white py-0.5 px-2;
     }
+}
+
+a, button, div {
+ -webkit-tap-highlight-color: transparent;
 }
 
 .fade-page-enter-active,
@@ -69,3 +69,19 @@ body {
   transform: translateX(100%);
   left: 100%;
 }
+
+.slide-up-full {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &-leave-to {
+    transform: translateY(100%);
+  }
+
+  &-enter-from {
+    transform: translateY(100%);
+  }
+}
+
