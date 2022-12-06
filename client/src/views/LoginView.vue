@@ -2,6 +2,7 @@
 import { Form, Field } from "vee-validate";
 import * as Yup from "yup";
 import { useAuthStore } from "../stores";
+import { Icon } from "@iconify/vue";
 
 const authStore = useAuthStore();
 
@@ -20,8 +21,11 @@ const schema = Yup.object().shape({
         <Field
           name="username"
           type="text"
-          class="px-2 py-0.5 rounded border-gray-400 border"
-          :class="{ 'border-red-600 border-2': errors.username }"
+          class="px-2 py-0.5 rounded border"
+          :class="{
+            'border-gray-400': !errors.username,
+            'border-red-600 border-2': errors.username,
+          }"
         />
         <div class="text-sm text-red-600 font-medium">
           {{ errors.username }}
@@ -32,15 +36,18 @@ const schema = Yup.object().shape({
         <Field
           name="password"
           type="password"
-          class="px-2 py-0.5 rounded border-gray-200 border-2"
-          :class="{ 'border-red-600 border-2': errors.password }"
+          class="px-2 py-0.5 rounded border"
+          :class="{
+            'border-gray-400': !errors.username,
+            'border-red-600 border-2': errors.password,
+          }"
         />
         <div class="text-sm text-red-600 font-medium">
           {{ errors.password }}
         </div>
       </div>
       <div class="flex flex-col mt-5">
-        <button class="btn btn-primary" :disabled="isSubmitting">
+        <button class="btn btn-primary mb-2" :disabled="isSubmitting">
           <span
             v-show="isSubmitting"
             class="spinner-border spinner-border-sm mr-1"
@@ -49,11 +56,20 @@ const schema = Yup.object().shape({
         </button>
 
         <button
-          class="btn btn-primary"
+          class="bg-white hover:bg-gray-200 px-2 rounded-lg py-1.5 border border-gray-200 mb-2 flex items-center gap-2 font-medium"
           type="button"
           @click="authStore.signInWithGoogle"
         >
-          Sign in with Google
+          <Icon icon="flat-color-icons:google" width="20px" /> Sign in with
+          Google
+        </button>
+        <button
+          class="bg-[#1877f2] hover:bg-[#0853b4] pl-2 pr-8 text-white rounded-lg py-1.5 border border-gray-200 mb-2 flex items-center gap-2 font-medium"
+          type="button"
+          @click="authStore.signInWithFacebook"
+        >
+          <Icon icon="bxl:facebook-circle" color="#fff" width="20px" /> Sign in
+          with Facebook
         </button>
       </div>
       <div v-if="errors.apiError" class="text-red-600 font-medium mt-3 mb-0">

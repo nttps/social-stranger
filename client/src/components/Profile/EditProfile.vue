@@ -18,16 +18,16 @@
     </div>
     <div class="flex flex-col gap-2 items-center mt-4">
       <div>
-        <img :src="profile.avatar" alt="" class="w-36 h-36" />
+        <img :src="user.avatar" alt="" class="w-36 h-36" />
       </div>
       <div class="flex flex-col self-start w-full p-4">
         <label for="name" class="label-input">Name</label>
-        <input v-model="profile.name" type="text" class="form-input" />
+        <input v-model="user.name" type="text" class="form-input" />
         <label for="username" class="label-input">Username</label>
-        <input v-model="profile.username" type="text" class="form-input" />
+        <input v-model="user.username" type="text" class="form-input" />
 
         <label for="bio" class="label-input">Bio</label>
-        <input v-model="profile.bio" type="text" class="form-input" />
+        <input v-model="user.bio" type="text" class="form-input" />
       </div>
     </div>
   </div>
@@ -35,20 +35,14 @@
 
 <script setup>
 import { Icon } from "@iconify/vue";
+import { useAuthStore } from "../../stores";
 
 defineEmits(["post", "closeEdit"]);
 
-const profile = reactive({
-  created_at: Date.now(),
-  message: "Hello, world again",
-  avatar: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-  name: "JON DOE",
-  username: "jondoe",
-  id: 5,
-  totalPost: 500,
-  totalCall: 10,
-  bio: "my bio",
-});
+const auth = useAuthStore()
+const user = ref(JSON.parse(auth.user));
+
+console.log(user);
 </script>
 
 <style lang="scss" scoped>
